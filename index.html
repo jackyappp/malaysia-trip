@@ -1,141 +1,434 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>马来西亚行程 (全自动修正版)</title>
-<style>
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f7; margin: 0; padding: 20px; }
-  .container { max-width: 800px; margin: auto; background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-  h1 { text-align: center; color: #1d1d1f; margin-bottom: 20px; }
-  .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-  .tab { flex: 1; padding: 12px; text-align: center; border-radius: 8px; background: #e0e0e0; cursor: pointer; font-weight: 500; }
-  .tab.active { background: #0071e3; color: white; }
-  .section { display: none; }
-  .section.active { display: block; }
-  textarea { width: 100%; height: 300px; margin: 10px 0; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px; box-sizing: border-box; }
-  button { width: 100%; padding: 14px; background: #0071e3; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; }
-  button:active { opacity: 0.8; }
-  .status { text-align: center; padding: 12px; margin-top: 15px; border-radius: 8px; display: none; font-size: 14px; }
-  .status.success { background: #d4edda; color: #155724; display: block; }
-  .status.error { background: #f8d7da; color: #721c24; display: block; }
-  .status.loading { background: #e3f2fd; color: #1565c0; display: block; }
-  pre { white-space: pre-wrap; word-wrap: break-word; background: #f8f9fa; padding: 16px; border-radius: 8px; font-size: 15px; line-height: 1.6; }
-  .info { background: #fff3cd; padding: 12px; border-radius: 8px; font-size: 13px; color: #856404; margin-bottom: 15px; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🇲🇾 Malaysia Trip</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #212529;
+            --text-secondary: #6c757d;
+            --accent: #ff6b6b; /* 小红书红/珊瑚色 */
+            --day1-color: #e7f5ff; /* 蓝 */
+            --day2-color: #fff3bf; /* 黄 */
+            --day3-color: #d3f9d8; /* 绿 */
+            --day4-color: #f3d9fa; /* 紫 */
+            --radius: 16px;
+            --shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 100px; /* 给底部按钮留空间 */
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px 20px;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: white;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: -20px auto 0;
+            padding: 0 16px;
+        }
+
+        .day-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+            border-left: 6px solid var(--accent);
+        }
+
+        .day-card:nth-child(1) { border-left-color: #4dabf7; background: var(--day1-color); }
+        .day-card:nth-child(2) { border-left-color: #ffd43b; background: var(--day2-color); }
+        .day-card:nth-child(3) { border-left-color: #40c057; background: var(--day3-color); }
+        .day-card:nth-child(4) { border-left-color: #ae3ec9; background: var(--day4-color); }
+
+        .day-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+        }
+
+        .day-icon {
+            font-size: 28px;
+            margin-right: 12px;
+        }
+
+        .day-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .day-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        .timeline-time {
+            width: 60px;
+            flex-shrink: 0;
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 14px;
+            padding-top: 2px;
+        }
+
+        .timeline-content {
+            flex-grow: 1;
+            padding-left: 12px;
+            border-left: 2px solid rgba(0,0,0,0.08);
+        }
+
+        .timeline-content strong {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.7);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-right: 6px;
+            margin-top: 6px;
+            color: #495057;
+        }
+
+        /* 悬浮编辑按钮 */
+        .fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.2s;
+        }
+
+        .fab:active {
+            transform: scale(0.95);
+        }
+
+        /* 编辑弹窗 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            z-index: 200;
+            padding: 16px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 680px;
+            border-radius: 20px 20px 0 0;
+            padding: 24px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .modal-header {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header span:last-child {
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        textarea {
+            width: 100%;
+            height: 300px;
+            padding: 16px;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 15px;
+            line-height: 1.6;
+            resize: none;
+            margin-bottom: 16px;
+        }
+
+        .modal-actions button {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .status-toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #212529;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 300;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .status-toast.show {
+            opacity: 1;
+        }
+
+    </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>🇲🇾 马来西亚 4D3N</h1>
-  
-  <div class="tabs">
-    <div class="tab active" onclick="switchTab('view')">🗓 查看行程</div>
-    <div class="tab" onclick="switchTab('edit')">✏️ 编辑行程</div>
-  </div>
+    <div class="header">
+        <h1>🇲🇾 马来西亚 4D3N</h1>
+        <p>Jack · Margaret · Ting</p>
+    </div>
 
-  <div class="info">
-    💡 提示：修改后点击保存，数据会直接写回 GitHub 仓库。其他人刷新此页面即可看到最新内容。
-  </div>
+    <div class="container" id="itineraryContainer">
+        <!-- 行程内容由 JS 动态生成 -->
+        <p style="text-align: center; padding: 40px; color: var(--text-secondary);">加载中...</p>
+    </div>
 
-  <div id="view" class="section active">
-    <pre id="content">加载中...</pre>
-  </div>
+    <!-- 悬浮编辑按钮 -->
+    <div class="fab" onclick="openModal()">✏️</div>
 
-  <div id="edit" class="section">
-    <textarea id="editor" placeholder="在这里编辑行程..."></textarea>
-    <button onclick="save()">💾 保存并同步</button>
-    <div id="status" class="status"></div>
-  </div>
-</div>
+    <!-- 编辑弹窗 -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>编辑行程</span>
+                <span onclick="closeModal()">×</span>
+            </div>
+            <textarea id="editor" placeholder="在这里修改行程...
+格式建议：
+Day 1: 吉隆坡
+上午：双子塔
+下午：中央艺术坊"></textarea>
+            <div class="modal-actions">
+                <button onclick="saveChanges()">💾 保存更改</button>
+            </div>
+        </div>
+    </div>
 
-<script>
-  // ✅ 你的 Token 已填入
-  const TOKEN = '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';
-  const OWNER = 'jackyappp';
-  const REPO = 'malaysia-trip';
-  const PATH = 'itinerary.txt';
-  const API_URL = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`;
+    <!-- 提示 Toast -->
+    <div class="status-toast" id="toast"></div>
 
-  let currentSha = null;
+    <script>
+        // ========== 配置区 ==========
+        const TOKEN = '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'; // 你的Token
+        const OWNER = 'jackyappp';
+        const REPO = 'malaysia-trip';
+        const PATH = 'itinerary.txt';
+        const API_URL = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`;
+        // ============================
 
-  // Base64 编码工具（修复中文乱码问题）
-  function toBase64(str) {
-    return btoa(unescape(encodeURIComponent(str)));
-  }
+        let currentSha = null;
+        let rawText = ''; // 存储原始文本
 
-  // 加载行程
-  async function loadItinerary() {
-    try {
-      const res = await fetch(API_URL);
-      if (res.status === 404) {
-        // 文件不存在，显示默认内容
-        const defaultText = "Day 1: 抵达 KL\nDay 2: 马六甲一日游\nDay 3: 飞槟城\nDay 4: 升旗山日出 & 飞新加坡";
-        document.getElementById('content').textContent = defaultText;
-        document.getElementById('editor').value = defaultText;
-        currentSha = null; // 确保 sha 为空
-        return;
-      }
-      const data = await res.json();
-      const content = decodeURIComponent(escape(atob(data.content)));
-      document.getElementById('content').textContent = content;
-      document.getElementById('editor').value = content;
-      currentSha = data.sha;
-    } catch (e) {
-      document.getElementById('content').textContent = '加载失败，请检查网络或仓库权限。';
-    }
-  }
+        // 初始化加载
+        document.addEventListener('DOMContentLoaded', loadItinerary);
 
-  // 保存行程
-  async function save() {
-    const statusEl = document.getElementById('status');
-    const content = document.getElementById('editor').value;
-    
-    statusEl.className = 'status loading';
-    statusEl.textContent = '正在保存...';
+        function openModal() {
+            document.getElementById('modal').classList.add('active');
+        }
 
-    const body = {
-      message: 'Update itinerary via web',
-      content: toBase64(content),
-      sha: currentSha // 如果是新建文件，sha 会是 null，API 会自动处理
-    };
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
 
-    try {
-      const res = await fetch(API_URL, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `token ${TOKEN}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      });
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
 
-      if (res.ok) {
-        statusEl.className = 'status success';
-        statusEl.textContent = '✅ 保存成功！正在刷新...';
-        await loadItinerary(); // 重新加载
-        setTimeout(() => switchTab('view'), 1000); // 1秒后切回查看页
-      } else {
-        const errData = await res.json();
-        throw new Error(errData.message || '保存失败');
-      }
-    } catch (e) {
-      statusEl.className = 'status error';
-      statusEl.textContent = '❌ 错误：' + e.message;
-    }
-  }
+        // 加载行程并渲染UI
+        async function loadItinerary() {
+            const container = document.getElementById('itineraryContainer');
+            try {
+                const res = await fetch(API_URL);
+                if (res.status === 404) {
+                    rawText = "Day 1: 抵达 KL\nDay 2: 马六甲一日游\nDay 3: 飞槟城\nDay 4: 升旗山日出 & 飞新加坡";
+                    document.getElementById('editor').value = rawText;
+                } else {
+                    const data = await res.json();
+                    rawText = decodeURIComponent(escape(atob(data.content)));
+                    document.getElementById('editor').value = rawText;
+                    currentSha = data.sha;
+                }
+                renderUI(rawText);
+            } catch (e) {
+                container.innerHTML = `<p style="text-align:center;color:red;">加载失败，请检查网络。</p>`;
+            }
+        }
 
-  function switchTab(tabName) {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    
-    document.getElementById(tabName).classList.add('active');
-    document.querySelector(`.tab[onclick*="${tabName}"]`).classList.add('active');
-  }
+        // 渲染漂亮的UI
+        function renderUI(text) {
+            const container = document.getElementById('itineraryContainer');
+            const days = text.split(/\n\s*\n/).filter(d => d.trim()); // 按空行分割天数
+            
+            let html = '';
+            const icons = ['✈️', '🏖️', '🍜', '🌅']; // 每天对应一个图标
+            const times = ['09:00', '12:00', '15:00', '19:00']; // 示例时间
 
-  // 页面加载时执行
-  loadItinerary();
-</script>
+            days.forEach((day, index) => {
+                const lines = day.split('\n').map(l => l.trim()).filter(l => l);
+                const title = lines[0] || `Day ${index + 1}`;
+                const content = lines.slice(1);
+
+                html += `
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-icon">${icons[index] || '📍'}</div>
+                        <div>
+                            <div class="day-title">${title}</div>
+                            <div class="day-subtitle">点击 ✏️ 编辑当日详情</div>
+                        </div>
+                    </div>
+                `;
+                
+                content.forEach((item, i) => {
+                    html += `
+                    <div class="timeline-item">
+                        <div class="timeline-time">${times[i] || ''}</div>
+                        <div class="timeline-content">
+                            <strong>${item}</strong>
+                        </div>
+                    </div>
+                    `;
+                });
+
+                html += `</div>`;
+            });
+
+            container.innerHTML = html || `<p style="text-align:center;padding:40px;color:var(--text-secondary);">暂无行程，点击 ✏️ 添加。</p>`;
+        }
+
+        // 保存更改
+        async function saveChanges() {
+            const newText = document.getElementById('editor').value;
+            if (!newText.trim()) {
+                showToast('内容不能为空');
+                return;
+            }
+
+            const body = {
+                message: 'Update itinerary via UI',
+                content: btoa(unescape(encodeURIComponent(newText))),
+                sha: currentSha
+            };
+
+            try {
+                const res = await fetch(API_URL, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${TOKEN}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                if (res.ok) {
+                    showToast('✅ 保存成功！正在刷新...');
+                    rawText = newText;
+                    renderUI(rawText);
+                    closeModal();
+                    // 注意：GitHub Pages 更新需要1-2分钟，这里只是前端立即刷新了
+                } else {
+                    const err = await res.json();
+                    throw new Error(err.message);
+                }
+            } catch (e) {
+                showToast('❌ 保存失败：' + e.message);
+            }
+        }
+
+        // Base64 编码辅助函数
+        function btoa_utf8(str) {
+            return btoa(unescape(encodeURIComponent(str)));
+        }
+    </script>
 
 </body>
 </html>
