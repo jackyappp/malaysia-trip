@@ -50,7 +50,7 @@ header p{font-size:12px;opacity:.9;margin-top:4px}
 .tip-card{background:var(--card);border-radius:12px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
 .tip-card h3{font-size:15px;margin-bottom:4px}
 .tip-card p,.tip-card li{font-size:13px;color:var(--sub)}
-textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;font-size:14px;font-family:inherit;min-height:120px;resize:vertical}
+textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;font-size:14px;font-family:inherit;min-height:200px;resize:vertical;line-height:1.6}
 .save-btn{width:100%;margin-top:8px;padding:12px;border:none;border-radius:10px;background:#7c3aed;color:#fff;font-size:15px;font-weight:700}
 .save-btn:active{transform:scale(.98)}
 .status{text-align:center;font-size:13px;color:#10b981;min-height:20px;padding:6px}
@@ -74,71 +74,9 @@ footer{text-align:center;font-size:11px;color:#9ca3af;padding:16px}
   <button class="tab" data-v="edit"><span class="emo">✏️</span>自定义</button>
 </div>
 
-<!-- ==================== 行程 ==================== -->
+<!-- ==================== 行程（由 JS 渲染，可被自定义覆盖） ==================== -->
 <div class="view active" id="view-itinerary">
-<div class="card">
-  <span class="day-tag kl">DAY 1 🔴 吉隆坡</span>
-  <div class="h2">抵达 & 市区漫游</div>
-  <ul class="tl">
-    <li><span class="time">上午</span> 抵达 KL，寄存行李，独立广场 Independent Square</li>
-    <li><span class="time">中午</span> 国家清真寺 National Mosque（免费借纱笼拍照）</li>
-    <li><span class="time">下午</span> 中央艺术坊 Central Market 买手绘纪念品（<b>砍价 15-20%</b>）</li>
-    <li><span class="time">傍晚</span> KLCC 公园拍双子塔倒影，蓝调时刻最佳</li>
-    <li><span class="time">晚上</span> Troika Sky Bar 高空酒吧看夜景 🌃</li>
-  </ul>
-  <div class="note">🏨 住：武吉免登 / KLCC 周边酒店</div>
-  <a class="btn btn-nav" href="https://www.google.com/maps/search/?api=1&query=Central+Market+Kuala+Lumpur" target="_blank">📍 导航：中央艺术坊</a>
-</div>
-
-<div class="card">
-  <span class="day-tag melaka">DAY 2 🔵 马六甲（住 KL）</span>
-  <div class="h2">一日往返</div>
-  <ul class="tl">
-    <li><span class="time">08:00</span> Grab / 包车出发（车程 2-2.5h）</li>
-    <li><span class="time">10:30</span> 荷兰红屋 Red Square → 圣保罗山 St. Paul's Hill</li>
-    <li><span class="time">12:30</span> <b class="food">Restoran Nyonya Makko 麦哥娘惹餐馆</b>（11:30 开门，豆酱鸡 + Ayam Pong Teh + 津加洛蛋 + Cendol）</li>
-    <li><span class="time">14:30</span> 鸡场街买娘惹糕点伴手礼</li>
-    <li><span class="time">15:30</span> 峇峇娘惹博物馆（穿娘惹装体验，不拍照也行）</li>
-    <li><span class="time">18:30</span> 返程 KL（避开 19:30 后回程高峰）</li>
-  </ul>
-  <div class="note">⚠️ 餐馆 14:25 午市截单，别太晚到！</div>
-  <a class="btn btn-nav" href="https://www.google.com/maps/search/?api=1&query=Restoran+Nyonya+Makko+Melaka" target="_blank">📍 导航：麦哥娘惹餐馆</a>
-  <a class="btn btn-nav" style="background:#8b5cf6" href="https://www.google.com/maps/search/?api=1&query=Baba+Nyonya+Heritage+Museum+Melaka" target="_blank">📍 导航：娘惹博物馆</a>
-</div>
-
-<div class="card">
-  <span class="day-tag penang">DAY 3 🟣 槟城（飞抵）</span>
-  <div class="h2">乔治市初体验</div>
-  <ul class="tl">
-    <li><span class="time">06:30</span> 早班机飞槟城（约 1h）</li>
-    <li><span class="time">09:00</span> 入住乔治市，Toh Soon Cafe 炭火吐司 + 牛油咖啡</li>
-    <li><span class="time">10:30</span> 壁画街 Mural Street → 爱情巷 Love Lane → 姓周桥</li>
-    <li><span class="time">12:30</span> <b class="food">新世界美食中心 New World Park</b>：海南鸡饭（Ting 点名！）+ 黑糖曼煎糕 + 槟城叻沙</li>
-    <li><span class="time">15:00</span> 丁宜海滩 Tanjung Bungah（白天先踩点，日落位留给 Day4）</li>
-    <li><span class="time">18:30</span> 乔治市夜宵：汕头街炒粿条 / 半夜排队档</li>
-  </ul>
-  <div class="note">🏨 住：槟城乔治市</div>
-  <a class="btn btn-nav" href="https://www.google.com/maps/search/?api=1&query=Toh+Soon+Cafe+Penang" target="_blank">📍 导航：Toh Soon Cafe</a>
-  <a class="btn btn-nav" style="background:#8b5cf6" href="https://www.google.com/maps/search/?api=1&query=New+World+Park+Food+City+Penang" target="_blank">📍 导航：新世界美食中心</a>
-</div>
-
-<div class="card">
-  <span class="day-tag penang">DAY 4 🟣 槟城 · 升旗山日出 → 晚飞新加坡</span>
-  <div class="h2">最后的清晨 & 告别</div>
-  <ul class="tl">
-    <li><span class="time">04:50</span> 起床，Grab 到 Air Itam 缆车站（约 20min）</li>
-    <li><span class="time">06:15</span> 排队等首班缆车 06:30 开门</li>
-    <li><span class="time">06:50-08:00</span> 🌅 山顶观景台看日出 + 云海（日出约 7:10-7:20）</li>
-    <li><span class="time">08:30</span> 缆车下山 → 酒店补觉 / 洗澡</li>
-    <li><span class="time">10:30</span> Ome Coffee（世界百大）或老字号牛油咖啡慢早餐</li>
-    <li><span class="time">13:00</span> <b class="food">🟡 榴莲收尾：D24 / 红虾（9月底仍有，新世界中心性价比最高）</b> — 回应 Ting！</li>
-    <li><span class="time">14:30</span> Grab 到机场，提前值机</li>
-    <li><span class="time">傍晚</span> ✈️ 晚班机飞新加坡，行程结束 🎉</li>
-  </ul>
-  <div class="note">⚠️ 升旗山猴子早 9 点前最活跃，别拿透明塑料袋装吃的！</div>
-  <a class="btn btn-nav" href="https://www.google.com/maps/search/?api=1&query=Penang+Hill+Lower+Station" target="_blank">📍 导航：升旗山缆车站</a>
-  <a class="btn btn-nav" style="background:#8b5cf6" href="https://www.google.com/maps/search/?api=1&query=Ome+Coffee+Penang" target="_blank">📍 导航：Ome Coffee</a>
-</div>
+  <div id="itineraryBody"><!-- JS 渲染 --></div>
 </div>
 
 <!-- ==================== 地图 ==================== -->
@@ -234,7 +172,7 @@ footer{text-align:center;font-size:11px;color:#9ca3af;padding:16px}
 <div class="view" id="view-edit">
 <div class="card">
   <div class="h2">✏️ 自定义行程</div>
-  <p style="font-size:13px;color:var(--sub);margin-bottom:8px">直接在下面编辑文字，改完点保存。手机上刷新也不会丢。</p>
+  <p style="font-size:13px;color:var(--sub);margin-bottom:8px">直接在下面编辑文字，改完点「保存修改」。保存后，上面「行程」Tab 会<b>立刻显示你的最新内容</b>，手机刷新也不会丢。</p>
   <textarea id="editArea">Day 1 · 吉隆坡
 上午：抵达，寄存行李，独立广场
 中午：国家清真寺（免费借纱笼）
@@ -274,21 +212,137 @@ Day 4 · 升旗山日出→飞新加坡
 <footer>马来西亚 4天3晚 · Jack & Margaret & Ting · 手机版行程</footer>
 
 <script>
+// ===== 默认行程数据（改这里就能改默认行程；自定义内容会覆盖它） =====
+var DEFAULT_ITINERARY = [
+  {tag:'DAY 1 🔴 吉隆坡', tagCls:'kl', title:'抵达 & 市区漫游', items:[
+    {time:'上午', text:'抵达 KL，寄存行李，独立广场 Independent Square'},
+    {time:'中午', text:'国家清真寺 National Mosque（免费借纱笼拍照）'},
+    {time:'下午', text:'中央艺术坊 Central Market 买手绘纪念品（<b>砍价 15-20%</b>）'},
+    {time:'傍晚', text:'KLCC 公园拍双子塔倒影，蓝调时刻最佳'},
+    {time:'晚上', text:'Troika Sky Bar 高空酒吧看夜景 🌃'}
+  ], nav:['https://www.google.com/maps/search/?api=1&query=Central+Market+Kuala+Lumpur','https://www.google.com/maps/search/?api=1&query=Troika+Sky+Dining+KL']},
+  {tag:'DAY 2 🔵 马六甲（住 KL）', tagCls:'melaka', title:'一日往返', items:[
+    {time:'08:00', text:'Grab / 包车出发（车程 2-2.5h）'},
+    {time:'10:30', text:'荷兰红屋 Red Square → 圣保罗山 St. Paul\'s Hill'},
+    {time:'12:30', text:'<b class="food">Restoran Nyonya Makko 麦哥娘惹餐馆</b>（11:30 开门，豆酱鸡 + Ayam Pong Teh + 津加洛蛋 + Cendol）'},
+    {time:'14:30', text:'鸡场街买娘惹糕点伴手礼'},
+    {time:'15:30', text:'峇峇娘惹博物馆（穿娘惹装体验，不拍照也行）'},
+    {time:'18:30', text:'返程 KL（避开 19:30 后回程高峰）'}
+  ], nav:['https://www.google.com/maps/search/?api=1&query=Restoran+Nyonya+Makko+Melaka','https://www.google.com/maps/search/?api=1&query=Baba+Nyonya+Heritage+Museum+Melaka']},
+  {tag:'DAY 3 🟣 槟城（飞抵）', tagCls:'penang', title:'乔治市初体验', items:[
+    {time:'06:30', text:'早班机飞槟城（约 1h）'},
+    {time:'09:00', text:'入住乔治市，Toh Soon Cafe 炭火吐司 + 牛油咖啡'},
+    {time:'10:30', text:'壁画街 Mural Street → 爱情巷 Love Lane → 姓周桥'},
+    {time:'12:30', text:'<b class="food">新世界美食中心 New World Park</b>：海南鸡饭（Ting 点名！）+ 黑糖曼煎糕 + 槟城叻沙'},
+    {time:'15:00', text:'丁宜海滩 Tanjung Bungah（白天先踩点，日落位留给 Day4）'},
+    {time:'18:30', text:'乔治市夜宵：汕头街炒粿条 / 半夜排队档'}
+  ], nav:['https://www.google.com/maps/search/?api=1&query=Toh+Soon+Cafe+Penang','https://www.google.com/maps/search/?api=1&query=New+World+Park+Food+City+Penang']},
+  {tag:'DAY 4 🟣 槟城 · 升旗山日出 → 晚飞新加坡', tagCls:'penang', title:'最后的清晨 & 告别', items:[
+    {time:'04:50', text:'起床，Grab 到 Air Itam 缆车站（约 20min）'},
+    {time:'06:15', text:'排队等首班缆车 06:30 开门'},
+    {time:'06:50-08:00', text:'🌅 山顶观景台看日出 + 云海（日出约 7:10-7:20）'},
+    {time:'08:30', text:'缆车下山 → 酒店补觉 / 洗澡'},
+    {time:'10:30', text:'Ome Coffee（世界百大）或老字号牛油咖啡慢早餐'},
+    {time:'13:00', text:'<b class="food">🟡 榴莲收尾：D24 / 红虾（9月底仍有，新世界中心性价比最高）</b> — 回应 Ting！'},
+    {time:'14:30', text:'Grab 到机场，提前值机'},
+    {time:'傍晚', text:'✈️ 晚班机飞新加坡，行程结束 🎉'}
+  ], nav:['https://www.google.com/maps/search/?api=1&query=Penang+Hill+Lower+Station','https://www.google.com/maps/search/?api=1&query=Ome+Coffee+Penang']}
+];
+
+// ===== 渲染行程到 #itineraryBody =====
+function renderItineraryHTML(html){
+  document.getElementById('itineraryBody').innerHTML = html;
+}
+
+function escapeHtml(s){
+  return s.replace(/[&<>]/g, function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});
+}
+
+function renderDefaultItinerary(){
+  var html = '';
+  DEFAULT_ITINERARY.forEach(function(d, di){
+    html += '<div class="card">';
+    html += '<span class="day-tag '+d.tagCls+'">'+d.tag+'</span>';
+    html += '<div class="h2">'+d.title+'</div>';
+    html += '<ul class="tl">';
+    d.items.forEach(function(it){
+      html += '<li'+(it.time?' class="time"':'')+'>'+(it.time?'<span class="time">'+it.time+'</span> ':'')+it.text+'</li>';
+    });
+    html += '</ul>';
+    if(d.nav && d.nav.length){
+      html += '<a class="btn btn-nav" href="'+d.nav[0]+'" target="_blank">📍 导航：'+d.title+'</a>';
+      for(var i=1;i<d.nav.length;i++){
+        html += '<a class="btn btn-nav" style="background:#8b5cf6" href="'+d.nav[i]+'" target="_blank">📍 导航</a>';
+      }
+    }
+    html += '</div>';
+  });
+  renderItineraryHTML(html);
+}
+
+// 自定义文本 → 简单分段渲染（按空行分段，按“关键词:”对齐）
+function renderCustomAsItinerary(text){
+  var blocks = text.split(/\n\s*\n/);
+  var html = '';
+  blocks.forEach(function(block){
+    var lines = block.split('\n').filter(function(l){return l.trim()!=='';});
+    if(!lines.length) return;
+    html += '<div class="card">';
+    // 第一行当标题
+    html += '<div class="h2">'+escapeHtml(lines[0].replace(/^(Day\s*\d+[·\s]*)/i,'')||lines[0])+'</div>';
+    html += '<ul class="tl">';
+    lines.forEach(function(line, idx){
+      if(idx===0) return;
+      var m = line.match(/^(.+?)[：:]\s*(.*)$/);
+      if(m){
+        html += '<li><span class="time">'+escapeHtml(m[1].trim())+'</span> '+escapeHtml(m[2].trim())+'</li>';
+      }else{
+        html += '<li>'+escapeHtml(line.trim())+'</li>';
+      }
+    });
+    html += '</ul></div>';
+  });
+  if(html==='') html = '<div class="card"><div class="h2">（空）</div><p style="color:var(--sub)">请在上方输入框填写行程内容</p></div>';
+  renderItineraryHTML(html);
+}
+
 // Tab 切换
-document.querySelectorAll('.tab').forEach(t=>{
-  t.addEventListener('click',()=>{
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-    document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+document.querySelectorAll('.tab').forEach(function(t){
+  t.addEventListener('click',function(){
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+    document.querySelectorAll('.view').forEach(function(x){x.classList.remove('active');});
     t.classList.add('active');
-    document.getElementById('view-'+t.dataset.v).classList.add('active');
+    var v = document.getElementById('view-'+t.dataset.v);
+    if(v) v.classList.add('active');
   });
 });
-// 自定义保存
+
+// 自定义保存 → 存本地 + 立刻同步覆盖行程 Tab
 document.getElementById('saveBtn').addEventListener('click',function(){
-  try{localStorage.setItem('tripEdit',document.getElementById('editArea').value);document.getElementById('statusMsg').textContent='✅ 已保存，刷新不丢！';setTimeout(()=>document.getElementById('statusMsg').textContent='',2000);}catch(e){document.getElementById('statusMsg').textContent='❌ 保存失败';}
+  var val = document.getElementById('editArea').value;
+  try{
+    localStorage.setItem('tripEdit', val);
+    renderCustomAsItinerary(val);      // 关键：立刻把新内容画到行程区
+    var sm = document.getElementById('statusMsg');
+    sm.textContent = '✅ 已保存，行程已更新！';
+    setTimeout(function(){sm.textContent='';}, 2000);
+  }catch(e){
+    document.getElementById('statusMsg').textContent = '❌ 保存失败';
+  }
 });
-// 读取本地保存
-try{var s=localStorage.getItem('tripEdit');if(s)document.getElementById('editArea').value=s;}catch(e){}
+
+// 页面加载：先读自定义，有就显示自定义版行程，没有就显示默认行程
+try{
+  var saved = localStorage.getItem('tripEdit');
+  if(saved && saved.trim()!==''){
+    renderCustomAsItinerary(saved);
+    document.getElementById('editArea').value = saved;
+  }else{
+    renderDefaultItinerary();
+  }
+}catch(e){
+  renderDefaultItinerary();
+}
 </script>
 </body>
 </html>
