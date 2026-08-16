@@ -1,434 +1,391 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🇲🇾 Malaysia Trip</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #f8f9fa;
-            --card-bg: #ffffff;
-            --text-main: #212529;
-            --text-secondary: #6c757d;
-            --accent: #ff6b6b; /* 小红书红/珊瑚色 */
-            --day1-color: #e7f5ff; /* 蓝 */
-            --day2-color: #fff3bf; /* 黄 */
-            --day3-color: #d3f9d8; /* 绿 */
-            --day4-color: #f3d9fa; /* 紫 */
-            --radius: 16px;
-            --shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🇲🇾🇸🇬 马来西亚4天3晚行程</title>
+<style>
+:root{
+  --kl:#e74c3c;--melaka:#3498db;--penang:#9b59b6;--sin:#27ae60;
+  --bg:#f5f6fa;--card:#fff;--txt:#2c3e50;--sub:#7f8c8d;--line:#e8e8e8;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"WenQuanYi Micro Hei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;padding-bottom:90px}
+header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:24px 16px 20px;text-align:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+header h1{font-size:20px;font-weight:700;margin-bottom:4px}
+header .sub{font-size:13px;opacity:.85}
+.sync-bar{position:sticky;top:0;z-index:99;background:#fff;border-bottom:1px solid var(--line);padding:8px 12px;display:flex;align-items:center;gap:8px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.sync-status{flex:1;font-size:12px;color:var(--sub);display:flex;align-items:center;gap:6px}
+.sync-status .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#bbb;flex-shrink:0}
+.sync-status .dot.ok{background:#27ae60;box-shadow:0 0 6px rgba(39,174,96,.5)}
+.sync-status .dot.err{background:#e74c3c;box-shadow:0 0 6px rgba(231,76,60,.5)}
+.sync-status .dot.saving{background:#f39c12;box-shadow:0 0 6px rgba(243,156,18,.5);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.tabs{display:flex;position:sticky;top:41px;z-index:98;background:#fff;border-bottom:1px solid var(--line)}
+.tab{flex:1;padding:12px 4px;text-align:center;font-size:13px;font-weight:600;color:var(--sub);border-bottom:3px solid transparent;cursor:pointer}
+.tab.active{color:#667eea;border-bottom-color:#667eea}
+.tab-content{display:none;padding:12px}
+.tab-content.active{display:block}
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+/* 行程卡片 */
+.day{margin-bottom:18px}
+.day-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:10px 14px;border-radius:12px;color:#fff;font-weight:700;font-size:15px}
+.day-1 .day-head{background:linear-gradient(135deg,#ff7675,#d63031)}
+.day-2 .day-head{background:linear-gradient(135deg,#74b9ff,#0984e3)}
+.day-3 .day-head{background:linear-gradient(135deg,#a29bfe,#6c5ce7)}
+.day-4 .day-head{background:linear-gradient(135deg,#55efc4,#00b894)}
+.card{background:var(--card);border-radius:12px;padding:12px 14px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);border-left:4px solid var(--line);position:relative;transition:opacity .3s}
+.card.kl{border-left-color:var(--kl)}
+.card.melaka{border-left-color:var(--melaka)}
+.card.penang{border-left-color:var(--penang)}
+.card.sin{border-left-color:var(--sin)}
+.card .time{font-size:12px;color:var(--sub);font-weight:600;margin-bottom:2px}
+.card .place{font-size:15px;font-weight:700;margin-bottom:4px}
+.card .desc{font-size:13px;color:#555;margin-bottom:6px}
+.card .tag{display:inline-block;background:#f0f0f0;border-radius:6px;padding:2px 8px;font-size:11px;color:#666;margin-right:4px;margin-top:4px}
+.card .nav-btn{display:inline-block;background:#eaf2ff;color:#2980b9;font-size:11px;padding:4px 10px;border-radius:6px;margin-top:6px;font-weight:600;text-decoration:none}
 
-        body {
-            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            line-height: 1.6;
-            padding-bottom: 100px; /* 给底部按钮留空间 */
-        }
+/* 地图 */
+#map{width:100%;height:300px;border-radius:12px;overflow:hidden;margin-bottom:10px}
+.poi-list{margin-top:10px}
+.poi{background:#fff;border-radius:10px;padding:10px 12px;margin-bottom:6px;font-size:13px;display:flex;justify-content:space-between;align-items:center}
+.poi a{color:#2980b9;font-size:12px;font-weight:600;text-decoration:none}
 
-        .header {
-            text-align: center;
-            padding: 40px 20px 20px;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-            color: white;
-            border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px;
-            box-shadow: var(--shadow);
-        }
+/* 攻略 */
+.tip{background:#fff;border-radius:10px;padding:12px 14px;margin-bottom:8px;font-size:13px}
+.tip b{color:#e74c3c}
 
-        .header h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-        }
+/* 编辑区 */
+.editor-wrap{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:flex-end;justify-content:center}
+.editor-wrap.active{display:flex}
+.editor-panel{background:#fff;width:100%;max-width:680px;max-height:85vh;border-radius:20px 20px 0 0;padding:20px;display:flex;flex-direction:column;animation:slideUp .3s}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.editor-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.editor-header h3{font-size:18px;font-weight:700}
+.editor-header .close{font-size:28px;color:var(--sub);cursor:pointer;line-height:1;padding:0 4px}
+textarea{width:100%;flex:1;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:13px;font-family:ui-monospace,Monaco,Consolas,monospace;resize:none;line-height:1.5}
+.editor-actions{display:flex;gap:8px;margin-top:12px}
+.btn-save{background:var(--sin);color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;flex:1}
+.btn-cancel{background:#eee;color:#555;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;flex:1}
 
-        .header p {
-            font-size: 15px;
-            opacity: 0.9;
-        }
+/* 浮动编辑按钮 */
+.fab{position:fixed;bottom:24px;right:24px;width:58px;height:58px;background:linear-gradient(135deg,#667eea,#764ba2);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 15px rgba(102,126,234,.4);cursor:pointer;border:none;z-index:100;transition:transform .2s}
+.fab:active{transform:scale(.92)}
 
-        .container {
-            max-width: 680px;
-            margin: -20px auto 0;
-            padding: 0 16px;
-        }
-
-        .day-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: var(--shadow);
-            border-left: 6px solid var(--accent);
-        }
-
-        .day-card:nth-child(1) { border-left-color: #4dabf7; background: var(--day1-color); }
-        .day-card:nth-child(2) { border-left-color: #ffd43b; background: var(--day2-color); }
-        .day-card:nth-child(3) { border-left-color: #40c057; background: var(--day3-color); }
-        .day-card:nth-child(4) { border-left-color: #ae3ec9; background: var(--day4-color); }
-
-        .day-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 1px dashed rgba(0,0,0,0.1);
-        }
-
-        .day-icon {
-            font-size: 28px;
-            margin-right: 12px;
-        }
-
-        .day-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .day-subtitle {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-top: 2px;
-        }
-
-        .timeline-item {
-            display: flex;
-            margin-bottom: 12px;
-            font-size: 15px;
-        }
-
-        .timeline-time {
-            width: 60px;
-            flex-shrink: 0;
-            font-weight: 500;
-            color: var(--text-secondary);
-            font-size: 14px;
-            padding-top: 2px;
-        }
-
-        .timeline-content {
-            flex-grow: 1;
-            padding-left: 12px;
-            border-left: 2px solid rgba(0,0,0,0.08);
-        }
-
-        .timeline-content strong {
-            color: var(--text-main);
-            font-weight: 500;
-        }
-
-        .tag {
-            display: inline-block;
-            background: rgba(255,255,255,0.7);
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 12px;
-            margin-right: 6px;
-            margin-top: 6px;
-            color: #495057;
-        }
-
-        /* 悬浮编辑按钮 */
-        .fab {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            width: 60px;
-            height: 60px;
-            background: var(--accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            color: white;
-            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
-            cursor: pointer;
-            z-index: 100;
-            transition: transform 0.2s;
-        }
-
-        .fab:active {
-            transform: scale(0.95);
-        }
-
-        /* 编辑弹窗 */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: none;
-            align-items: flex-end;
-            justify-content: center;
-            z-index: 200;
-            padding: 16px;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            width: 100%;
-            max-width: 680px;
-            border-radius: 20px 20px 0 0;
-            padding: 24px;
-            max-height: 80vh;
-            overflow-y: auto;
-            animation: slideUp 0.3s ease-out;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
-
-        .modal-header {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header span:last-child {
-            font-size: 28px;
-            cursor: pointer;
-            color: var(--text-secondary);
-        }
-
-        textarea {
-            width: 100%;
-            height: 300px;
-            padding: 16px;
-            border: 1px solid #dee2e6;
-            border-radius: 12px;
-            font-family: inherit;
-            font-size: 15px;
-            line-height: 1.6;
-            resize: none;
-            margin-bottom: 16px;
-        }
-
-        .modal-actions button {
-            width: 100%;
-            padding: 16px;
-            background: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .status-toast {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #212529;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 20px;
-            font-size: 14px;
-            z-index: 300;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-
-        .status-toast.show {
-            opacity: 1;
-        }
-
-    </style>
+footer{text-align:center;font-size:11px;color:#aaa;padding:16px}
+</style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>🇲🇾 马来西亚 4D3N</h1>
-        <p>Jack · Margaret · Ting</p>
-    </div>
+<header>
+  <h1>🇲🇾🇸🇬 马来西亚 4天3晚</h1>
+  <div class="sub">KL → Melaka → Penang → Singapore ✈️</div>
+</header>
 
-    <div class="container" id="itineraryContainer">
-        <!-- 行程内容由 JS 动态生成 -->
-        <p style="text-align: center; padding: 40px; color: var(--text-secondary);">加载中...</p>
-    </div>
+<div class="sync-bar">
+  <span class="sync-status" id="syncStatus"><span class="dot"></span>正在加载…</span>
+</div>
 
-    <!-- 悬浮编辑按钮 -->
-    <div class="fab" onclick="openModal()">✏️</div>
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('itinerary')">🗓 行程</div>
+  <div class="tab" onclick="switchTab('map')">🗺 地图</div>
+  <div class="tab" onclick="switchTab('tips')">💡 攻略</div>
+</div>
 
-    <!-- 编辑弹窗 -->
-    <div class="modal-overlay" id="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span>编辑行程</span>
-                <span onclick="closeModal()">×</span>
-            </div>
-            <textarea id="editor" placeholder="在这里修改行程...
-格式建议：
-Day 1: 吉隆坡
-上午：双子塔
-下午：中央艺术坊"></textarea>
-            <div class="modal-actions">
-                <button onclick="saveChanges()">💾 保存更改</button>
-            </div>
-        </div>
-    </div>
+<!-- 行程 -->
+<div class="tab-content active" id="tab-itinerary">
+<div id="itinerary-container"></div>
+</div>
 
-    <!-- 提示 Toast -->
-    <div class="status-toast" id="toast"></div>
+<!-- 地图 -->
+<div class="tab-content" id="tab-map">
+<div id="map"></div>
+<div class="share-box">
+  <b>🔗 分享链接</b><br>
+  把这个链接发到微信群/WhatsApp，3人打开看到的内容完全同步：<br><br>
+  <code id="shareUrl" style="word-break:break-all;font-size:12px;background:#f0f0f0;padding:8px 10px;border-radius:6px;display:inline-block;max-width:100%"></code>
+</div>
+<div class="poi-list" id="poi-list"></div>
+</div>
 
-    <script>
-        // ========== 配置区 ==========
-        const TOKEN = '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'; // 你的Token
-        const OWNER = 'jackyappp';
-        const REPO = 'malaysia-trip';
-        const PATH = 'itinerary.txt';
-        const API_URL = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`;
-        // ============================
+<!-- 攻略 -->
+<div class="tab-content" id="tab-tips">
+<div id="tips-container"></div>
+</div>
 
-        let currentSha = null;
-        let rawText = ''; // 存储原始文本
+<!-- 浮动编辑按钮 -->
+<button class="fab" onclick="openEditor()">✏️</button>
 
-        // 初始化加载
-        document.addEventListener('DOMContentLoaded', loadItinerary);
+<!-- 编辑弹窗 -->
+<div class="editor-wrap" id="editorWrap" onclick="if(event.target===this)closeEditor()">
+<div class="editor-panel">
+  <div class="editor-header">
+    <h3>✏️ 编辑行程（实时自动保存）</h3>
+    <span class="close" onclick="closeEditor()">×</span>
+  </div>
+  <textarea id="editArea" placeholder="在这里直接编辑 JSON 行程数据..."></textarea>
+  <div class="editor-actions">
+    <button class="btn-cancel" onclick="closeEditor()">取消</button>
+    <button class="btn-save" onclick="saveNow()">💾 保存并发布</button>
+  </div>
+  <p style="font-size:11px;color:#999;margin-top:10px;text-align:center">
+    保存后会自动写入 GitHub 仓库，所有人刷新页面即刻看到更新
+  </p>
+</div>
+</div>
 
-        function openModal() {
-            document.getElementById('modal').classList.add('active');
-        }
+<footer>数据实时同步 GitHub · 三人刷新即同 ✨</footer>
 
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
-        }
+<script>
+// ====== 配置（只需要改这里） ======
+const TOKEN = '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';
+const OWNER = 'jackyappp';
+const REPO = 'malaysia-trip';
+const DATA_FILE = 'itinerary.json';
+const API_URL = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${DATA_FILE}`;
+// ==================================
 
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            toast.textContent = msg;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2000);
-        }
+const STORAGE_KEY = 'malaysia_trip_cache_' + DATA_FILE;
+let currentData = null;
+let saveInProgress = false;
+let saveTimer = null;
 
-        // 加载行程并渲染UI
-        async function loadItinerary() {
-            const container = document.getElementById('itineraryContainer');
-            try {
-                const res = await fetch(API_URL);
-                if (res.status === 404) {
-                    rawText = "Day 1: 抵达 KL\nDay 2: 马六甲一日游\nDay 3: 飞槟城\nDay 4: 升旗山日出 & 飞新加坡";
-                    document.getElementById('editor').value = rawText;
-                } else {
-                    const data = await res.json();
-                    rawText = decodeURIComponent(escape(atob(data.content)));
-                    document.getElementById('editor').value = rawText;
-                    currentSha = data.sha;
-                }
-                renderUI(rawText);
-            } catch (e) {
-                container.innerHTML = `<p style="text-align:center;color:red;">加载失败，请检查网络。</p>`;
-            }
-        }
+// 默认数据（首次使用或文件不存在时）
+const DEFAULT_DATA = {
+  days: [
+    {
+      id:1, title:"Day 1 · 吉隆坡", color:"kl",
+      items:[
+        {time:"上午",place:"独立广场 & 国家清真寺",desc:"免费借纱笼拍照，伊斯兰建筑超震撼",tags:["kl"],mapQuery:"Merdeka Square Kuala Lumpur"},
+        {time:"中午",place:"茨厂街（Petaling Street）",desc:"唐人街逛吃，肉骨茶早午餐",tags:["kl"],mapQuery:"Petaling Street KL"},
+        {time:"下午",place:"中央艺术坊 Central Market",desc:"手绘纪念品/伴手礼，砍价15-20%",tags:["kl"],mapQuery:"Central Market Kuala Lumpur"},
+        {time:"傍晚",place:"KLCC 公园",desc:"双子塔倒影，蓝调时刻拍照最佳",tags:["kl"],mapQuery:"KLCC Park Kuala Lumpur"},
+        {time:"晚上",place:"Troika Sky Dining 高空酒吧",desc:"看双子塔从金变蓝的夜景（Margaret视频同款）",tags:["kl"],mapQuery:"Troika Sky Dining Kuala Lumpur"}
+      ]
+    },
+    {
+      id:2, title:"Day 2 · 马六甲（住KL）", color:"melaka",
+      items:[
+        {time:"08:00",place:"出发去马六甲",desc:"Grab包车/拼车往返，约2.5h车程",tags:["melaka"],mapQuery:"Melaka City Center"},
+        {time:"10:30",place:"荷兰红屋 & 圣保罗山",desc:"荷兰红屋是亚洲最老欧式建筑，免费",tags:["melaka"],mapQuery:"Dutch Square Melaka"},
+        {time:"12:30",place:"Restoran Nyonya Makko 麦哥娘惹餐馆",desc:"11:30开门！豆酱鸡+Ayam Pong Teh+津加洛蛋+Cendol，14:25截午市别太晚",tags:["melaka"],mapQuery:"Restoran Nyonya Makko Melaka"},
+        {time:"14:30",place:"鸡场街 Cheong Wah Street",desc:"买娘惹糕点伴手礼（Margaret视频里那家老字号）",tags:["melaka"],mapQuery:"Jonker Walk Melaka"},
+        {time:"15:30",place:"峇峇娘惹博物馆 Baba Nyonya Heritage Museum",desc:"穿娘惹装体验不拍照也很有feel，免费入场",tags:["melaka"],mapQuery:"Baba Nyonya Heritage Museum Melaka"},
+        {time:"16:30",place:"河畔百大咖啡馆",desc:"喝一杯歇脚，附近就是Putu Piring路边摊9毛钱",tags:["melaka"],mapQuery:"Melaka River Coffee Melaka"},
+        {time:"18:30",place:"返回吉隆坡",desc:"避开19:30后回程高峰，住KL",tags:["kl"],mapQuery:"Kuala Lumpur"}
+      ]
+    },
+    {
+      id:3, title:"Day 3 · KL → 槟城", color:"penang",
+      items:[
+        {time:"06:30",place:"飞槟城 ✈️",desc:"1h出头，亚航/马航多班，行李托运注意",tags:["penang"],mapQuery:"KL International Airport"},
+        {time:"09:00",place:"Toh Soon Cafe",desc:"炭火吐司+牛油咖啡（Margaret视频同款OG店）",tags:["penang"],mapQuery:"Toh Soon Cafe Penang"},
+        {time:"10:30",place:"壁画街 → 爱情巷 → 姓周桥",desc:"George Town City Walk经典线",tags:["penang"],mapQuery:"Street Art Penang George Town"},
+        {time:"12:30",place:"新世界美食中心 New World Park",desc:"Ting点名的海南鸡饭 + 黑糖曼煎糕 + 槟城叻沙",tags:["penang"],mapQuery:"New World Park Food City Penang"},
+        {time:"15:00",place:"丁宜海滩 Batu Ferringhi",desc:"白天先踩点，傍晚回来看日落",tags:["penang"],mapQuery:"Batu Ferringhi Beach Penang"},
+        {time:"18:30",place:"乔治市夜宵",desc:"汕头街炒粿条 / 半夜排队档",tags:["penang"],mapQuery:"Penang Night Food George Town"},
+        {time:"晚上",place:"住槟城乔治市",desc:"行李可寄酒店前台",tags:["penang"],mapQuery:"George Town Penang"}
+      ]
+    },
+    {
+      id:4, title:"Day 4 · 升旗山日出 → 飞新加坡", color:"sin",
+      items:[
+        {time:"04:50",place:"起床！",desc:"今天要早起看升旗山日出☀️",tags:["penang"],mapQuery:"Penang Hill"},
+        {time:"05:20",place:"Grab到Air Itam缆车站",desc:"乔治市出发约20min",tags:["penang"],mapQuery:"Penang Hill Air Itam Lower Station"},
+        {time:"06:30",place:"首班缆车上山",desc:"⚠️官方6:30开缆！日出约7:10-7:20",tags:["penang"],mapQuery:"Penang Hill Cable Car"},
+        {time:"06:50-08:00",place:"山顶看日出+云海",desc:"走Monkey Cup步道，⚠️猴子9点前最活跃",tags:["penang"],mapQuery:"Penang Hill Summit View"},
+        {time:"08:30",place:"缆车下山+补觉",desc:"回酒店补觉/洗澡，慢慢来",tags:["penang"],mapQuery:""},
+        {time:"10:30",place:"Ome Coffee 慢早餐",desc:"世界百大咖啡馆（Margaret文档3）",tags:["penang"],mapQuery:"Ome Coffee Penang"},
+        {time:"11:30",place:"Love Lane & 隐藏小人",desc:"小众店+西班牙艺术家Cordal装置",tags:["penang"],mapQuery:"Love Lane Penang"},
+        {time:"13:00",place:"榴莲收尾 🥇",desc:"9月底槟城仍有D24/红虾，猫山王少量",tags:["penang"],mapQuery:"Durian Penang"},
+        {time:"14:30",place:"Grab到槟城机场",desc:"提前2h值机",tags:["penang"],mapQuery:"Penang International Airport"},
+        {time:"晚上",place:"飞新加坡 ✈️",desc:"结束4天3晚行程！",tags:["sin"],mapQuery:"Singapore Changi Airport"}
+      ]
+    }
+  ],
+  tips:[
+    {b:"🐒 升旗山防猴",t:"山顶猴子超 aggressive！别拿透明塑料袋/手提包装吃的，食物放背包里拉上拉链。9点后猴子逐渐安静。"},
+    {b:"💰 砍价",t:"中央艺术坊手绘纪念品/伴手礼可砍15-20%，机场免税店别买，市区便宜一半。"},
+    {b:"🥇 榴莲9月底",t:"过了旺季但槟城全年有榴莲屋！D24、红虾管够，猫山王少量。新世界美食中心那家性价比最高。"},
+    {b:"👘 娘惹体验",t:"峇峇娘惹博物馆有租纱笼体验区，不用拍照也能穿穿看。"},
+    {b:"🆓 免费清单",t:"荷兰红屋、峇峇娘惹博物馆、KLCC公园、升旗山缆车首班、马六甲河畔步道——这些都不花钱！"},
+    {b:"🚗 交通",t:"马来西亚Grab很成熟，槟城建议下载Grab+GrabPay。槟城建议租Grab接驳车。"},
+    {b:"⏰ 早班机",t:"Day3早班机建议选7点前那班，落地9点刚好赶上Toh Soon Cafe开门。"},
+    {b:"📱 本地SIM",t:"亚航官网值机用马来西亚手机号接收验证码，提前买Digi/Sunsim卡，落地就能用。"}
+  ]
+};
 
-        // 渲染漂亮的UI
-        function renderUI(text) {
-            const container = document.getElementById('itineraryContainer');
-            const days = text.split(/\n\s*\n/).filter(d => d.trim()); // 按空行分割天数
-            
-            let html = '';
-            const icons = ['✈️', '🏖️', '🍜', '🌅']; // 每天对应一个图标
-            const times = ['09:00', '12:00', '15:00', '19:00']; // 示例时间
+// ====== 工具函数 ======
+function setStatus(text, type){
+  const st = document.getElementById('syncStatus');
+  const dot = '<span class="dot '+(type||'')+'"></span>';
+  st.innerHTML = dot + text;
+}
+function showToast(msg){
+  const t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;z-index:999;transition:opacity .3s';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300);},2000);
+}
 
-            days.forEach((day, index) => {
-                const lines = day.split('\n').map(l => l.trim()).filter(l => l);
-                const title = lines[0] || `Day ${index + 1}`;
-                const content = lines.slice(1);
+// ====== 数据加载 ======
+async function loadData(){
+  // 1. 先读本地缓存（秒开）
+  try{
+    const cached = localStorage.getItem(STORAGE_KEY);
+    if(cached){ currentData = JSON.parse(cached); return; }
+  }catch(e){}
 
-                html += `
-                <div class="day-card">
-                    <div class="day-header">
-                        <div class="day-icon">${icons[index] || '📍'}</div>
-                        <div>
-                            <div class="day-title">${title}</div>
-                            <div class="day-subtitle">点击 ✏️ 编辑当日详情</div>
-                        </div>
-                    </div>
-                `;
-                
-                content.forEach((item, i) => {
-                    html += `
-                    <div class="timeline-item">
-                        <div class="timeline-time">${times[i] || ''}</div>
-                        <div class="timeline-content">
-                            <strong>${item}</strong>
-                        </div>
-                    </div>
-                    `;
-                });
+  // 2. 读 GitHub 上的文件
+  try{
+    const res = await fetch(API_URL, {headers:{Authorization:`token ${TOKEN}`}});
+    if(res.ok){
+      const data = await res.json();
+      currentData = JSON.parse(decodeURIComponent(escape(atob(data.content))));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(currentData));
+      return;
+    }
+  }catch(e){/* fall through to default */}
+  
+  // 3. 用默认数据
+  currentData = JSON.parse(JSON.stringify(DEFAULT_DATA));
+}
 
-                html += `</div>`;
-            });
+// ====== 保存（自动 + 手动） ======
+async function saveData(silent){
+  if(saveInProgress) return;
+  saveInProgress = true;
+  
+  if(!silent) setStatus('保存中...', 'saving');
+  
+  const json = JSON.stringify(currentData);
+  const b64 = btoa(unescape(encodeURIComponent(json)));
+  
+  try{
+    // 先获取当前文件的 sha
+    let sha = null;
+    try{
+      const res = await fetch(API_URL, {headers:{Authorization:`token ${TOKEN}`}});
+      if(res.ok){ sha = (await res.json()).sha; }
+    }catch(e){}
+    
+    const res = await fetch(API_URL, {
+      method: 'PUT',
+      headers:{
+        'Authorization':`token ${TOKEN}`,
+        'Content-Type':'application/json',
+        'Accept':'application/vnd.github.v3+json'
+      },
+      body: JSON.stringify({
+        message: 'Update itinerary via web (auto-save)',
+        content: b64,
+        sha: sha // null = 新建文件
+      })
+    });
+    
+    if(res.ok){
+      // 更新本地缓存
+      localStorage.setItem(STORAGE_KEY, json);
+      if(!silent){
+        setStatus('✅ 已保存并发布 · 其他人刷新即看到', 'ok');
+        showToast('✅ 保存成功！其他人刷新页面即可看到更新');
+      }
+    }else{
+      const err = await res.json().catch(()=>({}));
+      throw new Error(err.message || ('HTTP '+res.status));
+    }
+  }catch(e){
+    if(!silent){
+      setStatus('❌ 保存失败：'+e.message, 'err');
+      showToast('❌ 保存失败：'+e.message);
+    }
+  }finally{
+    saveInProgress = false;
+    if(!silent){
+      setTimeout(()=>{ setStatus('✅ 已同步 · 自动保存已开启', 'ok'); }, 3000);
+    }
+  }
+}
 
-            container.innerHTML = html || `<p style="text-align:center;padding:40px;color:var(--text-secondary);">暂无行程，点击 ✏️ 添加。</p>`;
-        }
+// ====== 渲染 ======
+function render(){
+  let html = '';
+  currentData.days.forEach(d=>{
+    html += '<div class="day day-'+d.id+'"><div class="day-head">'+d.title+'</div>';
+    d.items.forEach((it)=>{
+      html += '<div class="card '+it.tags[0]+'">'+
+        '<div class="time">🕐 '+it.time+'</div>'+
+        '<div class="place">📍 '+it.place+'</div>'+
+        '<div class="desc">'+it.desc+'</div>'+
+        (it.mapQuery?'<a class="nav-btn" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(it.mapQuery)+'" target="_blank">📍 导航</a>':'')+
+        '</div>';
+    });
+    html += '</div>';
+  });
+  document.getElementById('itinerary-container').innerHTML = html;
 
-        // 保存更改
-        async function saveChanges() {
-            const newText = document.getElementById('editor').value;
-            if (!newText.trim()) {
-                showToast('内容不能为空');
-                return;
-            }
+  let th = '';
+  currentData.tips.forEach(t=>{ th += '<div class="tip"><b>'+t.b+'</b><br>'+t.t+'</div>'; });
+  document.getElementById('tips-container').innerHTML = th;
 
-            const body = {
-                message: 'Update itinerary via UI',
-                content: btoa(unescape(encodeURIComponent(newText))),
-                sha: currentSha
-            };
+  let ph = '';
+  currentData.days.forEach(d=>{
+    d.items.forEach(it=>{
+      if(it.mapQuery){
+        ph += '<div class="poi"><span>📍 '+it.place+'</span><a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(it.mapQuery)+'" target="_blank">导航 →</a></div>';
+      }
+    });
+  });
+  document.getElementById('poi-list').innerHTML = ph;
+  document.getElementById('shareUrl').textContent = location.href;
+}
 
-            try {
-                const res = await fetch(API_URL, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `token ${TOKEN}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(body)
-                });
+// ====== Tab切换 ======
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='map') initMap();
+}
 
-                if (res.ok) {
-                    showToast('✅ 保存成功！正在刷新...');
-                    rawText = newText;
-                    renderUI(rawText);
-                    closeModal();
-                    // 注意：GitHub Pages 更新需要1-2分钟，这里只是前端立即刷新了
-                } else {
-                    const err = await res.json();
-                    throw new Error(err.message);
-                }
-            } catch (e) {
-                showToast('❌ 保存失败：' + e.message);
-            }
-        }
+// ====== 地图 ======
+function initMap(){
+  const html = '<iframe width="100%" height="100%" frameborder="0" src="https://www.google.com/maps?q=Penang+Island+Malaysia&output=embed" allowfullscreen></iframe>';
+  document.getElementById('map').innerHTML = html;
+}
 
-        // Base64 编码辅助函数
-        function btoa_utf8(str) {
-            return btoa(unescape(encodeURIComponent(str)));
-        }
-    </script>
+// ====== 编辑器 ======
+function openEditor(){
+  document.getElementById('editArea').value = JSON.stringify(currentData, null, 2);
+  document.getElementById('editorWrap').classList.add('active');
+}
+function closeEditor(){
+  document.getElementById('editorWrap').classList.remove('active');
+}
+async function saveNow(){
+  try{
+    const newData = JSON.parse(document.getElementById('editArea').value);
+    currentData = newData;
+    await saveData(false); // 非静默 = 显示状态 + Toast
+    render();
+    closeEditor();
+  }catch(e){
+    setStatus('❌ JSON格式错误', 'err');
+    showToast('❌ JSON格式错误：'+e.message);
+  }
+}
 
+// ====== 启动 ======
+(async function init(){
+  setStatus('加载中...', '');
+  await loadData();
+  render();
+  // 显示已同步状态
+  const d = new Date();
+  setStatus('✅ 已同步 · 自动保存已开启', 'ok');
+})();
+</script>
 </body>
 </html>
