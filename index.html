@@ -1,9 +1,141 @@
-<?xml version='1.0' encoding='utf-8' ?>
-<Error>
-	<Code>NoSuchKey</Code>
-	<Message>The specified key does not exist.</Message>
-	<Resource>/outputs/0453/fd8a6197fdad4760bd10f5086dfa34bb/0PcejW8j8AS/malaysia_trip_final.html</Resource>
-	<RequestId>UzFfNmE4MTc3YWRfMl81NjMwMjcwYl9iNjcyXzI0NTcwZmY=</RequestId>
-	<TraceId/>
-</Error>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>马来西亚行程 (全自动修正版)</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f7; margin: 0; padding: 20px; }
+  .container { max-width: 800px; margin: auto; background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+  h1 { text-align: center; color: #1d1d1f; margin-bottom: 20px; }
+  .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+  .tab { flex: 1; padding: 12px; text-align: center; border-radius: 8px; background: #e0e0e0; cursor: pointer; font-weight: 500; }
+  .tab.active { background: #0071e3; color: white; }
+  .section { display: none; }
+  .section.active { display: block; }
+  textarea { width: 100%; height: 300px; margin: 10px 0; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px; box-sizing: border-box; }
+  button { width: 100%; padding: 14px; background: #0071e3; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; }
+  button:active { opacity: 0.8; }
+  .status { text-align: center; padding: 12px; margin-top: 15px; border-radius: 8px; display: none; font-size: 14px; }
+  .status.success { background: #d4edda; color: #155724; display: block; }
+  .status.error { background: #f8d7da; color: #721c24; display: block; }
+  .status.loading { background: #e3f2fd; color: #1565c0; display: block; }
+  pre { white-space: pre-wrap; word-wrap: break-word; background: #f8f9fa; padding: 16px; border-radius: 8px; font-size: 15px; line-height: 1.6; }
+  .info { background: #fff3cd; padding: 12px; border-radius: 8px; font-size: 13px; color: #856404; margin-bottom: 15px; }
+</style>
+</head>
+<body>
 
+<div class="container">
+  <h1>🇲🇾 马来西亚 4D3N</h1>
+  
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('view')">🗓 查看行程</div>
+    <div class="tab" onclick="switchTab('edit')">✏️ 编辑行程</div>
+  </div>
+
+  <div class="info">
+    💡 提示：修改后点击保存，数据会直接写回 GitHub 仓库。其他人刷新此页面即可看到最新内容。
+  </div>
+
+  <div id="view" class="section active">
+    <pre id="content">加载中...</pre>
+  </div>
+
+  <div id="edit" class="section">
+    <textarea id="editor" placeholder="在这里编辑行程..."></textarea>
+    <button onclick="save()">💾 保存并同步</button>
+    <div id="status" class="status"></div>
+  </div>
+</div>
+
+<script>
+  // ✅ 你的 Token 已填入
+  const TOKEN = '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';
+  const OWNER = 'jackyappp';
+  const REPO = 'malaysia-trip';
+  const PATH = 'itinerary.txt';
+  const API_URL = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`;
+
+  let currentSha = null;
+
+  // Base64 编码工具（修复中文乱码问题）
+  function toBase64(str) {
+    return btoa(unescape(encodeURIComponent(str)));
+  }
+
+  // 加载行程
+  async function loadItinerary() {
+    try {
+      const res = await fetch(API_URL);
+      if (res.status === 404) {
+        // 文件不存在，显示默认内容
+        const defaultText = "Day 1: 抵达 KL\nDay 2: 马六甲一日游\nDay 3: 飞槟城\nDay 4: 升旗山日出 & 飞新加坡";
+        document.getElementById('content').textContent = defaultText;
+        document.getElementById('editor').value = defaultText;
+        currentSha = null; // 确保 sha 为空
+        return;
+      }
+      const data = await res.json();
+      const content = decodeURIComponent(escape(atob(data.content)));
+      document.getElementById('content').textContent = content;
+      document.getElementById('editor').value = content;
+      currentSha = data.sha;
+    } catch (e) {
+      document.getElementById('content').textContent = '加载失败，请检查网络或仓库权限。';
+    }
+  }
+
+  // 保存行程
+  async function save() {
+    const statusEl = document.getElementById('status');
+    const content = document.getElementById('editor').value;
+    
+    statusEl.className = 'status loading';
+    statusEl.textContent = '正在保存...';
+
+    const body = {
+      message: 'Update itinerary via web',
+      content: toBase64(content),
+      sha: currentSha // 如果是新建文件，sha 会是 null，API 会自动处理
+    };
+
+    try {
+      const res = await fetch(API_URL, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `token ${TOKEN}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+
+      if (res.ok) {
+        statusEl.className = 'status success';
+        statusEl.textContent = '✅ 保存成功！正在刷新...';
+        await loadItinerary(); // 重新加载
+        setTimeout(() => switchTab('view'), 1000); // 1秒后切回查看页
+      } else {
+        const errData = await res.json();
+        throw new Error(errData.message || '保存失败');
+      }
+    } catch (e) {
+      statusEl.className = 'status error';
+      statusEl.textContent = '❌ 错误：' + e.message;
+    }
+  }
+
+  function switchTab(tabName) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    
+    document.getElementById(tabName).classList.add('active');
+    document.querySelector(`.tab[onclick*="${tabName}"]`).classList.add('active');
+  }
+
+  // 页面加载时执行
+  loadItinerary();
+</script>
+
+</body>
+</html>
